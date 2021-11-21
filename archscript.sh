@@ -17,4 +17,4 @@ if [ -e configure.conf ]; then source configure.conf; fi
 
 # Give execution privileges and run base-install
 chmod +x 1-base-install.sh
-./base-install.sh
+./1-base-install.sh
