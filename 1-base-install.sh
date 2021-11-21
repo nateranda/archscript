@@ -38,10 +38,13 @@ esac
 if [ -e /sys/firmware/efi/efivars ]
 then
     parted $disk mklabel gpt mkpart "EFI system partition" fat32 1MiB 512MiB set 1 esp on mkpart "root partition" ext4 512MiB 100%
+    mkfs.fat -F 32 ${disk}1
+    mkfs.ext4 ${disk}2
     mount ${disk}2 /mnt
     mkdir /mnt/boot
     mount ${disk}1 /mnt/boot
 else
     parted $disk mklabel msdos mkpart primary ext4 1MiB 100% set 1 boot on
+    mkfs.ext4 ${disk}1
     mount ${disk}1 /mnt
 fi
