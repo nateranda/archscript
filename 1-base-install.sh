@@ -34,7 +34,7 @@ case $consent in
         ;;
 esac
 
-# Select disk label type
+# Format disk
 if [ -e /sys/firmware/efi/efivars ]
 then
     parted $disk mklabel gpt mkpart "EFI system partition" fat32 1MiB 512MiB set 1 esp on mkpart "root partition" ext4 512MiB 100%
@@ -54,3 +54,12 @@ sed -i 's/^#Para/Para/' /etc/pacman.conf
 
 # Install base, kernel, and firmware
 pacstrap /mnt base linux linux-firmware
+
+# Create swap file
+dd if=/dev/zero of=/mnt/swapfile bs=1M count=$swapsize
+chmod 600 /mnt/swapfile
+mkswap /mnt/swapfile
+swapon /mnt/swapfile
+
+# Generate fstab file
+genfstab -U /mnt >> /mnt/etc/fstab
