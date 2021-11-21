@@ -48,6 +48,7 @@ case $bootloader in
             pacman -S grub --noconfirm
             grub-install $disk
             grub-mkconfig -o /boot/grub/grub.cfg
+        fi
     *)
         echo "invalid or unsupported bootloader choice"
 esac
