@@ -11,11 +11,6 @@
 # 2-post-install.sh (everything performed in arch-chroot)
 # 3-user-install.sh (everything performed as the main user)
 
-
-# Import configure.conf file if it exists
-# if [ -e ~/archscript/config.conf ]; then source config.conf; fi
-
 # Give execution privileges and run base-install
 chmod +x 1-base-install.sh
 ./1-base-install.sh
-source config.conf

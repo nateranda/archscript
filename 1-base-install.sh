@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Import configure.conf file if it exists
+if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
+
 # Sync system clock
 timedatectl set-ntp true
 
@@ -7,7 +10,7 @@ timedatectl set-ntp true
 if [ -v keymap ]; then loadkeys $keymap; fi
 
 # Prompt for disk if not in conf file
-if [ -v disk ]
+if [ ! -v disk ]
 then
     lsblk
     read -p "What disk do you want to install Arch on?: " disk
@@ -20,7 +23,7 @@ read -p "This will erase all data on $disk. Continue? [y/N]: " consent
 case $consent in
     y|Y|yes|YES)
         echo "Formatting $disk:"
-        ;;
+        ;;    
     *)
         echo "Aborting..."
         exit
