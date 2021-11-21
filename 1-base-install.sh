@@ -7,7 +7,7 @@ timedatectl set-ntp true
 if [ -v keymap ]; then loadkeys $keymap; fi
 
 # Prompt for disk if not in conf file
-if [ -v $disk ]
+if [ -v disk ]
 then
     lsblk
     read -p "What disk do you want to install Arch on?: " disk
