@@ -55,7 +55,10 @@ sed -i 's/^#Para/Para/' /etc/pacman.conf
 # Install base, kernel, and firmware
 pacstrap /mnt base linux linux-firmware
 
-# Create swap file
+# Prompt for swap size if not in conf file
+if [ ! -v disk ]; then read -p "How big should the swapfile be? (in megabytes): " swapsize; fi
+
+# Create swapfile
 dd if=/dev/zero of=/mnt/swapfile bs=1M count=$swapsize
 chmod 600 /mnt/swapfile
 mkswap /mnt/swapfile
