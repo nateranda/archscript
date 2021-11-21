@@ -50,7 +50,7 @@ else
 fi
 
 # Enable parallel downloads
-echo "ParallelDownloads = 5" >> /etc/pacman.conf
+sed -i 's/^#Para/Para/' /etc/pacman.conf
 
 # Install base, kernel, and firmware
-pacstrap /mnt base linux linux-virmware
+pacstrap /mnt base linux linux-firmware
