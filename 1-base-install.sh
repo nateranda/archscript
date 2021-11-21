@@ -48,3 +48,9 @@ else
     mkfs.ext4 ${disk}1
     mount ${disk}1 /mnt
 fi
+
+# Enable parallel downloads
+echo "ParallelDownloads = 5" >> /etc/pacman.conf
+
+# Install base, kernel, and firmware
+pacstrap /mnt base linux linux-virmware
