@@ -32,4 +32,4 @@ chmod +x 1-base-install.sh
 # Copy file to /mnt, give execution privileges, and run post-install
 cp 2-post-install.sh /mnt
 chmod +x /mnt/2-post-install.sh
-arch-chroot /mnt /mnt/2-post-install.sh
+arch-chroot /mnt ~/archscript/2-post-install.sh
