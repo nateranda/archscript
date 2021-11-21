@@ -16,10 +16,10 @@ First, burn the [Archiso image](https://archlinux.org/download/) onto a USB flas
 cp path/to/archlinux-version-x86_64.iso /your/drive
 ```
 
-Once you have booted off of the DVD/USB drive, install github with `pacman`:
+Once you have booted off of the DVD/USB drive, install git with `pacman`:
 
 ```shell
-pacman -S github
+pacman -Sy git
 ```
 
 Then, clone the Archscript Github repo, give permissions, and run the script:
