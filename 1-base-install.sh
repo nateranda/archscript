@@ -4,7 +4,7 @@ echo "##############"
 echo "#BASE INSTALL#"
 echo "##############"
 
-# Import configure.conf file if it exists
+# Import config.conf file if it exists
 if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
 
 # Sync system clock
@@ -56,9 +56,9 @@ sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacstrap /mnt base linux linux-firmware
 
 # Prompt for swap size if not in conf file
-if [ ! -v disk ]; then read -p "How big should the swapfile be? (in megabytes): " swapsize; fi
+if [ ! -v swapsize ]; then read -p "How big should the swapfile be? (in megabytes): " swapsize; fi
 
-# Create swapfile
+# Create swapfile, set permissions, & load swap
 dd if=/dev/zero of=/mnt/swapfile bs=1M count=$swapsize
 chmod 600 /mnt/swapfile
 mkswap /mnt/swapfile
