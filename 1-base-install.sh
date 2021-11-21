@@ -42,6 +42,6 @@ then
     mkdir /mnt/boot
     mount ${disk}1 /mnt/boot
 else
-    parted $disk mklabel mbr mkpart primary ext4 1MiB 100% set 1 boot on
+    parted $disk mklabel msdos mkpart primary ext4 1MiB 100% set 1 boot on
     mount ${disk}1 /mnt
 fi
