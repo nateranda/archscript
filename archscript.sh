@@ -13,7 +13,7 @@
 
 
 # Import configure.conf file if it exists
-if [ -e configure.conf ]; then source configure.conf; fi
+if [ -e ~/archscript/config.conf ]; then source config.conf; fi
 
 # Give execution privileges and run base-install
 chmod +x 1-base-install.sh
