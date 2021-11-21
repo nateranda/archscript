@@ -19,7 +19,11 @@
 
 # Huge shoutout to Chris Titus Tech and his ArchTitus project - it inspired me
 # to make my own scripts and served as a great starting place to build off of.
+# -----------------------------------------------------------------------------
 
+
+# Import configure.conf file if it exists
+if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
 
 # Give execution privileges and run base-install
 chmod +x 1-base-install.sh
@@ -28,4 +32,4 @@ chmod +x 1-base-install.sh
 # Copy file to /mnt, give execution privileges, and run post-install
 cp 2-post-install.sh /mnt
 chmod +x /mnt/2-post-install.sh
-arch-chroot /mnt 2-post-install.sh
+arch-chroot /mnt /mnt/2-post-install.sh
