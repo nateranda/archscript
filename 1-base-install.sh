@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "##############"
+echo "#BASE INSTALL#"
+echo "##############"
+
 # Import configure.conf file if it exists
 if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
 
@@ -33,3 +37,11 @@ esac
 # Select disk label type
 if [ -e /sys/firmware/efi/efivars ]
 then
+    parted $disk mklabel gpt mkpart "EFI system partition" fat32 1MiB 512MiB set 1 esp on mkpart "root partition" ext4 512MiB 100%
+    mount ${disk}2 /mnt
+    mkdir /mnt/boot
+    mount ${disk}1 /mnt/boot
+else
+    parted $disk mklabel mbr mkpart primary ext4 1MiB 100% set 1 boot on
+    mount ${disk}1 /mnt
+fi
