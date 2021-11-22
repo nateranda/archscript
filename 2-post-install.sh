@@ -61,7 +61,7 @@ esac
 if [ ! -v rootpassword ]; then read -p -s "Root Password: " rootpassword; fi
 
 # Set root password
-chpasswd root:$rootpassword
+echo $rootpassword | passwd --stdin
 
 # Prompt for username if not in conf file
 if [ ! -v username ]; then read -p "Username: " username; fi
@@ -71,7 +71,7 @@ if [ ! -v userpassword ]; then read -p -s "User Password: " userpassword; fi
 
 # Set up user
 useradd -m $username
-chpasswd $username:$userpassword
+echo $userpassword | passwd --stdin $username
 usermod -aG wheel $username
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
