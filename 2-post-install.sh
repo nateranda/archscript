@@ -70,10 +70,13 @@ if [ ! -v username ]; then read -p "Username: " username; fi
 if [ ! -v userpassword ]; then read -p -s "User Password: " userpassword; fi
 
 # Set up user
+pacman -S sudo --noconfirm
 useradd -m $username
 echo $userpassword | passwd --stdin $username
 usermod -aG wheel $username
-sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+
+# Add nopassword to sudoers
+sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
 # Install & enable essential internet tools
 pacman -S networkmanager dhcpcd --noconfirm
@@ -86,21 +89,21 @@ if [ ! -v desktop ]; then read -p "Desktop Environment/Window Manager [none/gnom
 # Download desktop environment or window manager
 case $desktop in
     none)
-        echo "Skipping DE/WM install:"
+        echo "Skipping DE/WM install."
         ;;
     gnome)
         # Install/enable gnome & bluez
-        pacman -S gnome bluez bluez-utils
+        pacman -S gnome bluez bluez-utils --noconfirm
         systemctl enable bluetooth
         systemctl snable gdm
         ;;
     gnome-additions)
         # Install/enable gnome & bluez
-        pacman -S gnome bluez bluez-utils
+        pacman -S gnome bluez bluez-utils --noconfirm
         systemctl enable bluetooth
         systemctl snable gdm
         ;;
     *)
-        echo "Invalid DE/WM choice. Skipping install:"
+        echo "Invalid DE/WM choice. Skipping install."
         ;;
 esac
