@@ -54,7 +54,7 @@ case $desktop in
 
         # Install extensions
         pip install --user gnome-extensions-cli
-        echo "export PATH=/home/$username/.local/bin:$PATH" >> ~/.bashrc
+        echo "\nexport PATH=/home/$username/.local/bin:$PATH" >> ~/.bashrc
         gnome-extensions-cli install 751 3193 1160 1112 --backend file
         ;;
     *)

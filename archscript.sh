@@ -50,4 +50,4 @@ rm /mnt/config.conf
 # Give execution privileges & run user-install as user
 chmod +x /mnt/home/$username/3-user-install.sh
 arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/3-user-install.sh
-rm /home/$username/3-user-install.sh
+rm /mnt/home/$username/3-user-install.sh
