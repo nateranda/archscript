@@ -80,6 +80,7 @@ case $bootloader in
 esac
 
 # Set root password
+echo "Set Root Password:"
 passwd
 
 # Prompt for username if not in conf file
@@ -92,6 +93,7 @@ fi
 # Set up user
 pacman -S sudo --noconfirm
 useradd -m $username
+echo "Set user Password:"
 passwd $username
 usermod -aG wheel $username
 
