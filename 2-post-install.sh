@@ -91,6 +91,19 @@ then
     echo "username=$username" >> /config.conf
 fi
 
+# Check processor type and install microcode (thanks CTT!)
+proc_type=$(lscpu | awk '/Vendor ID:/ {print $3}')
+case "$proc_type" in
+	GenuineIntel)
+		pacman -S --noconfirm intel-ucode
+		proc_ucode=intel-ucode.img
+		;;
+	AuthenticAMD)
+		pacman -S --noconfirm amd-ucode
+		proc_ucode=amd-ucode.img
+		;;
+esac	
+
 # Set up user
 pacman -S sudo --noconfirm
 useradd -m $username
