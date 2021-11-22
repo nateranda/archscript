@@ -60,30 +60,20 @@ case $bootloader in
         ;;
 esac
 
-# Prompt for root password if not in conf file
-if [ ! -v rootpassword ]; then read -p -s "Root Password: " rootpassword; fi
-
 # Set root password
-echo $rootpassword | passwd --stdin
+passwd
 
 # Prompt for username if not in conf file
 if [ ! -v username ]; then read -p "Username: " username; fi
 
-# Prompt for user password if not in conf file
-if [ ! -v userpassword ]; then read -p -s "User Password: " userpassword; fi
-
 # Set up user
 pacman -S sudo --noconfirm
 useradd -m $username
-sleep 5
-echo $userpassword | passwd --stdin $username
-sleep 5
+passwd $username
 usermod -aG wheel $username
-sleep 5
 
 # Add wheel to sudoers
-sed -i 's/^# %wheel ALL=(ALL)/%wheel ALL=(ALL)/' /etc/sudoers
-sleep 5
+sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
 # Install & enable essential internet tools
 pacman -S networkmanager dhcpcd --noconfirm
