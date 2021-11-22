@@ -9,6 +9,9 @@ echo "##############"
 # Import config.conf file if it exists
 if [ -e /config.conf ]; then source /config.conf; fi
 
+# Enable parallel downloads on machine
+sed -i 's/^#Para/Para/' /etc/pacman.conf
+
 # Prompt for timezone if not in conf file
 if [ ! -v timezone ]; then read -p "Timezone (after /usr/share/zoneinfo/, ex. America/New_York): " timezone; fi
 
