@@ -45,7 +45,7 @@ then
     mkdir /mnt/boot
     mount ${disk}1 /mnt/boot
 else
-    parted $disk mklabel msdos mkpart primary ext4 1MiB 100% set 1 boot on
+    parted $disk mklabel msdos mkpart ext4 1MiB 100% set 1 boot on
     mkfs.ext4 ${disk}1
     mount ${disk}1 /mnt
 fi
