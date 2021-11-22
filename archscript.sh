@@ -25,14 +25,28 @@
 # Import configure.conf file if it exists
 if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
 
-# Give execution privileges and run base-install
+# Give execution privileges
 chmod +x 1-base-install.sh
+
+# Run base-install
 ./1-base-install.sh
 
-# Copy file/config to /mnt, give execution privileges, and run post-install
+# Copy file/config to /mnt
 cp 2-post-install.sh /mnt/2-post-install.sh
 if [ -e ~/archscript/config.conf ]; then cp ~/archscript/config.conf /mnt/config.conf; fi
+
+# Give execution privileges & run post-install in chroot
 chmod +x /mnt/2-post-install.sh
 arch-chroot /mnt /2-post-install.sh
+
+# Remove script & conf file from /mnt
 rm /mnt/2-post-install.sh
 rm /mnt/config.conf
+
+# Copy file/config to user home
+cp 3-user-install.sh /mnt/home/$username/3-user-install.sh
+if [ -e ~/archscript/config.conf ]; then cp ~/archscript/config.conf /mnt/home/$username/config.conf; fi
+
+# Give execution privileges & run user-install as user
+chmod +x /mnt/home/$username/3-user-install.sh
+arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/3-user-install.sh
