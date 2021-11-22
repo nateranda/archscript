@@ -98,13 +98,22 @@ case $desktop in
         # Install/enable gnome & bluez
         pacman -S gnome bluez bluez-utils --noconfirm
         systemctl enable bluetooth
-        systemctl snable gdm
+        systemctl enable gdm
         ;;
     gnome-additions)
         # Install/enable gnome & bluez
-        pacman -S gnome bluez bluez-utils --noconfirm
+        pacman -S gnome gnome-tweaks gnome-extensions bluez bluez-utils --noconfirm
         systemctl enable bluetooth
-        systemctl snable gdm
+        systemctl enable gdm
+
+        # Remove GNOME bloat
+        pacman -R gnome-books gnome-contacts gnome-maps gnome-music gnome-weather simple-scan --noconfirm
+
+        # Tweak settings to my liking
+        dconf write /org/gnome/desktop/peripherals/mouse/accel-profile flat
+        dconf write /org/gnome/desktop/wm/preferences/button-layout appmenu:minimize,maximize,close
+        dconf write /org/gnome/desktop/interface/clock-format 12h
+        dconf write /org/gtk/settings/file-chooser/clock-format 12h
         ;;
     *)
         echo "Invalid DE/WM choice. Skipping install."
