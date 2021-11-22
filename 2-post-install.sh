@@ -75,11 +75,15 @@ if [ ! -v userpassword ]; then read -p -s "User Password: " userpassword; fi
 # Set up user
 pacman -S sudo --noconfirm
 useradd -m $username
+sleep 5
 echo $userpassword | passwd --stdin $username
+sleep 5
 usermod -aG wheel $username
+sleep 5
 
-# Add nopassword to sudoers
-sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+# Add wheel to sudoers
+sed -i 's/^# %wheel ALL=(ALL)/%wheel ALL=(ALL)/' /etc/sudoers
+sleep 5
 
 # Install & enable essential internet tools
 pacman -S networkmanager dhcpcd --noconfirm
