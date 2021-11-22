@@ -57,3 +57,6 @@ case $desktop in
         echo "export PATH=/home/$username/.local/bin:$PATH"
         gnome-extensions-cli install 751 3193 1160 1112 --backend file
         ;;
+    *)
+        echo "Skipping."
+esac
