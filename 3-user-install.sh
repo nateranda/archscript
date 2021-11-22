@@ -22,7 +22,6 @@ case $aurhelper in
         git clone https://aur.archlinux.org/paru.git
         cd paru
         makepkg -si
-        paru -S $aurpackages --noconfirm
         cd ~
         ;;
     yay)
@@ -30,7 +29,6 @@ case $aurhelper in
         git clone https://aur.archlinux.org/yay.git
         cd yay
         makepkg -si
-        yay -S $aurpackages --noconfirm
         cd ~
         ;;
     *)
@@ -38,11 +36,14 @@ case $aurhelper in
         sleep 5
 esac
 
+# Install misc AUR packages
+$aurhelper -S $aurpackages --noconfirm
+
 # Continue with DE/WM setup
 case $desktop in
     gnome-additions)
         # Install AUR packages
-        paru -S chrome-gnome-shell nordic-darker-theme gnome-terminal-transparency --noconfirm
+        $aurhelper -S chrome-gnome-shell nordic-darker-theme gnome-terminal-transparency --noconfirm
 
         # Install nord gnome terminal theme
         cd Downloads
