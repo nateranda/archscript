@@ -60,7 +60,7 @@ pacstrap /mnt base linux linux-firmware
 if [ ! -v swapsize ]
 then
     read -p "How big should the swapfile be? (in megabytes): " swapsize
-    echo "swapsize=$swapsize" >> ~/archscript/config.conf
+    echo -e "\nswapsize=$swapsize" >> ~/archscript/config.conf
 fi
 
 # Create swapfile, set permissions, & load swap

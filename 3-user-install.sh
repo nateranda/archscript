@@ -11,7 +11,7 @@ source ~/config.conf
 if [ ! -v aurhelper ]
 then
     read -p "AUR Helper [paru/yay]: " aurhelper
-    echo "aurhelper=$aurhelper" >> ~/config.conf
+    echo -e "\naurhelper=$aurhelper" >> ~/config.conf
 fi
 
 # Install AUR helper & packages
@@ -46,17 +46,14 @@ case $desktop in
         $aurhelper -S chrome-gnome-shell nordic-darker-theme gnome-terminal-transparency --noconfirm
 
         # Install nord gnome terminal theme
-        cd Downloads
-        git clone https://github.com/arcticicestudio/nord-gnome-terminal.git
-        cd nord-gnome-terminal/src
-        ./nord.sh
-        cd ~
-        rm -rf Downloads/nord-gnome-terminal
+        git clone https://github.com/arcticicestudio/nord-gnome-terminal.git ~/Downloads
+        . ~/Downloads/nord-gnome-terminal/src/nord.sh
+        rm -rf ~/Downloads/nord-gnome-terminal
 
         # Install extensions
         pip install --user gnome-extensions-cli
-        echo "\nexport PATH=/home/$username/.local/bin:$PATH" >> ~/.bashrc
-        gnome-extensions-cli install 751 3193 1160 1112 --backend file
+        echo -n "export PATH=/home/$username/.local/bin:$PATH" >> ~/.bashrc
+        gnome-extensions-cli install 751 3193 1160 1112 615 --backend file
         ;;
     *)
         echo "Skipping."

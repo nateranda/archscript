@@ -18,7 +18,7 @@ sed -i 's/^#Para/Para/' /etc/pacman.conf
 if [ ! -v timezone ];
 then
     read -p "Timezone (after /usr/share/zoneinfo/, ex. America/New_York): " Timezone
-    echo "timezone=$timezone" >> /config.conf
+    echo -e "\ntimezone=$timezone" >> /config.conf
 fi
 
 # Set timezone
@@ -31,7 +31,7 @@ hwclock --systohc
 if [ ! -v locale ]
 then
     read -p "Locale: " locale
-    echo "locale=$locale" >> /config.conf
+    echo -e "\nlocale=$locale" >> /config.conf
 fi
 
 # Uncomment locale in locale.gen & generate locale
@@ -45,7 +45,7 @@ echo "LANG=$locale" >> /etc/locale.conf
 if [ ! -v hostname ]
 then
     read -p "Hostname: " hostname
-    echo "hostname=$hostname" >> /config.conf
+    echo -e "\nhostname=$hostname" >> /config.conf
 fi
 
 # Add hostname
@@ -55,7 +55,7 @@ echo $hostname >> /etc/hostname
 if [ ! -v bootloader ]
 then
     read -p "Bootloader [grub]: " bootloader
-    echo "bootloader=$bootloader" >> /config.conf
+    echo -e "\nbootloader=$bootloader" >> /config.conf
 fi
 
 # Install bootloader
@@ -65,12 +65,12 @@ case $bootloader in
         then
             pacman -S grub efibootmgr os-prober dosfstools --noconfirm
             grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-            echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
+            echo -e "\nGRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
             grub-mkconfig -o /boot/grub/grub.cfg
         else
             pacman -S grub os-prober --noconfirm
             grub-install $disk
-            echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
+            echo -e "\nGRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
             grub-mkconfig -o /boot/grub/grub.cfg
         fi
         ;;
@@ -88,7 +88,7 @@ passwd
 if [ ! -v username ]
 then
     read -p "Username: " username
-    echo "username=$username" >> /config.conf
+    echo -e "\nusername=$username" >> /config.conf
 fi
 
 # Check processor type and install microcode (thanks CTT!)
@@ -123,7 +123,7 @@ systemctl enable NetworkManager
 if [ ! -v desktop ]
 then
     read -p "Desktop Environment/Window Manager [none/gnome/gnome-additions]: " desktop
-    echo "desktop:$desktop" >> /config.conf
+    echo -e "\ndesktop:$desktop" >> /config.conf
 fi
 
 # Download desktop environment or window manager
