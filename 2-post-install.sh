@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# If you're running these scripts manually, this should be run in chroot, AKA after arch-chroot.
+
 echo "##############"
 echo "#POST INSTALL#"
 echo "##############"
@@ -33,7 +35,7 @@ if [ ! -v hostname ]; then read -p "Hostname: " hostname; fi
 echo $hostname >> /etc/hostname
 
 # Prompt for bootloader if not in conf file
-if [ ! -v bootloader ]; then read -p "Bootloader (grub): " bootloader; fi
+if [ ! -v bootloader ]; then read -p "Bootloader [grub]: " bootloader; fi
 
 # Install bootloader
 case $bootloader in
@@ -49,6 +51,56 @@ case $bootloader in
             grub-install $disk
             grub-mkconfig -o /boot/grub/grub.cfg
         fi
+        ;;
     *)
-        echo "invalid or unsupported bootloader choice"
+        echo "invalid or unsupported bootloader"
+        ;;
+esac
+
+# Prompt for root password if not in conf file
+if [ ! -v rootpassword ]; then read -p -s "Root Password: " rootpassword; fi
+
+# Set root password
+chpasswd root:$rootpassword
+
+# Prompt for username if not in conf file
+if [ ! -v username ]; then read -p "Username: " username; fi
+
+# Prompt for user password if not in conf file
+if [ ! -v userpassword ]; then read -p -s "User Password: " userpassword; fi
+
+# Set up user
+useradd -m $username
+chpasswd $username:$userpassword
+usermod -aG wheel $username
+sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+
+# Install & enable essential internet tools
+pacman -S networkmanager dhcpcd --noconfirm
+systemctl enable dhcpcd
+systemctl enable NetworkManager
+
+# Prompt for desktop if not in conf file
+if [ ! -v desktop ]; then read -p "Desktop Environment/Window Manager [none/gnome/gnome-additions]: " desktop; fi
+
+# Download desktop environment or window manager
+case $desktop in
+    none)
+        echo "Skipping DE/WM install:"
+        ;;
+    gnome)
+        # Install/enable gnome & bluez
+        pacman -S gnome bluez bluez-utils
+        systemctl enable bluetooth
+        systemctl snable gdm
+        ;;
+    gnome-additions)
+        # Install/enable gnome & bluez
+        pacman -S gnome bluez bluez-utils
+        systemctl enable bluetooth
+        systemctl snable gdm
+        ;;
+    *)
+        echo "Invalid DE/WM choice. Skipping install:"
+        ;;
 esac

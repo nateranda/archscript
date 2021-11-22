@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# If you're running this manually, this should be run in the arch live ISO shell.
+
 echo "##############"
 echo "#BASE INSTALL#"
 echo "##############"
@@ -21,7 +23,7 @@ then
 fi
 
 # Prompt for confirmation to erase all data on drive
-read -p "This will erase all data on $disk. Continue? [y/N]: " consent
+read -p "This will erase all data on $disk. Continue? [y/n]: " consent
 
 # Continue if yes
 case $consent in
