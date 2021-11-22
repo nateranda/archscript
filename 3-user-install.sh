@@ -22,7 +22,7 @@ case $aurhelper in
         git clone https://aur.archlinux.org/paru.git
         cd paru
         makepkg -si
-        paru -S $aurpackages --autoconfirm
+        paru -S $aurpackages --noconfirm
         cd ~
         ;;
     yay)
@@ -30,7 +30,7 @@ case $aurhelper in
         git clone https://aur.archlinux.org/yay.git
         cd yay
         makepkg -si
-        yay -S $aurpackages --autoconfirm
+        yay -S $aurpackages --noconfirm
         cd ~
         ;;
     *)
@@ -41,4 +41,19 @@ esac
 # Continue with DE/WM setup
 case $desktop in
     gnome-additions)
+        # Install AUR packages
+        paru -S chrome-gnome-shell nordic-darker-theme gnome-terminal-transparency --noconfirm
+
+        # Install nord gnome terminal theme
+        cd Downloads
+        git clone https://github.com/arcticicestudio/nord-gnome-terminal.git
+        cd nord-gnome-terminal/src
+        ./nord.sh
+        cd ~
+        rm -rf Downloads/nord-gnome-terminal
+
+        # Install extensions
+        pip install --user gnome-extensions-cli
+        echo "export PATH=/home/$username/.local/bin:$PATH"
+        gnome-extensions-cli install 751 3193 1160 1112 --backend file
         ;;

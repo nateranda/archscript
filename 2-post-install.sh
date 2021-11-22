@@ -124,8 +124,8 @@ case $desktop in
         systemctl enable gdm
         ;;
     gnome-additions)
-        # Install/enable gnome & bluez
-        pacman -S xorg gnome gnome-tweaks gnome-software-packagekit-plugin bluez bluez-utils --noconfirm --needed
+        # Install/enable gnome & misc packages
+        pacman -S xorg gnome gnome-tweaks gnome-software-packagekit-plugin bluez bluez-utils python-pip --noconfirm --needed
         systemctl enable bluetooth
         systemctl enable gdm
 
@@ -133,10 +133,10 @@ case $desktop in
         pacman -R gnome-books gnome-contacts gnome-maps gnome-music gnome-weather simple-scan --noconfirm
 
         # Tweak settings to my liking
-        dconf write /org/gnome/desktop/peripherals/mouse/accel-profile flat
-        dconf write /org/gnome/desktop/wm/preferences/button-layout appmenu:minimize,maximize,close
-        dconf write /org/gnome/desktop/interface/clock-format 12h
-        dconf write /org/gtk/settings/file-chooser/clock-format 12h
+        dconf write /org/gnome/desktop/peripherals/mouse/accel-profile "'flat'"
+        dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,maximize,close'"
+        dconf write /org/gnome/desktop/interface/clock-format "'12h'"
+        dconf write /org/gtk/settings/file-chooser/clock-format "'12h'"
         ;;
     *)
         echo "Invalid DE/WM choice. Skipping install."
