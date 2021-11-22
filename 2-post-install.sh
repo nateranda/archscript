@@ -146,4 +146,4 @@ case $desktop in
 esac
 
 # Install other packages:
-pacman -S $packages
+pacman -S $packages --noconfirm
