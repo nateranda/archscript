@@ -68,8 +68,9 @@ case $bootloader in
             echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
             grub-mkconfig -o /boot/grub/grub.cfg
         else
-            pacman -S grub --noconfirm
+            pacman -S grub os-prober --noconfirm
             grub-install $disk
+            echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
             grub-mkconfig -o /boot/grub/grub.cfg
         fi
         ;;
