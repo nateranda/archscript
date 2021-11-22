@@ -34,3 +34,5 @@ cp 2-post-install.sh /mnt/2-post-install.sh
 if [ -e ~/archscript/config.conf ]; then cp ~/archscript/config.conf /mnt/config.conf; fi
 chmod +x /mnt/2-post-install.sh
 arch-chroot /mnt /2-post-install.sh
+rm /mnt/2-post-install.sh
+rm /mnt/config.conf

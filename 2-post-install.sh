@@ -96,13 +96,13 @@ case $desktop in
         ;;
     gnome)
         # Install/enable gnome & bluez
-        pacman -S gnome bluez bluez-utils --noconfirm
+        pacman -S xorg gnome bluez bluez-utils --noconfirm --needed
         systemctl enable bluetooth
         systemctl enable gdm
         ;;
     gnome-additions)
         # Install/enable gnome & bluez
-        pacman -S gnome gnome-tweaks gnome-extensions bluez bluez-utils --noconfirm
+        pacman -S xorg gnome gnome-tweaks bluez bluez-utils --noconfirm --needed
         systemctl enable bluetooth
         systemctl enable gdm
 
@@ -119,3 +119,6 @@ case $desktop in
         echo "Invalid DE/WM choice. Skipping install."
         ;;
 esac
+
+# Install other packages:
+pacman -S $packages
