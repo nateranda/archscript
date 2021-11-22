@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# If you're running this manually, this should be run in the arch live ISO shell.
-
 echo "##############"
 echo "#BASE INSTALL#"
 echo "##############"
@@ -20,6 +18,7 @@ if [ ! -v disk ]
 then
     lsblk
     read -p "What disk do you want to install Arch on?: " disk
+    echo "disk=$disk" >> ~/archscript/config.conf
 fi
 
 # Prompt for confirmation to erase all data on drive
@@ -58,7 +57,11 @@ sed -i 's/^#Para/Para/' /etc/pacman.conf
 pacstrap /mnt base linux linux-firmware
 
 # Prompt for swap size if not in conf file
-if [ ! -v swapsize ]; then read -p "How big should the swapfile be? (in megabytes): " swapsize; fi
+if [ ! -v swapsize ]
+then
+    read -p "How big should the swapfile be? (in megabytes): " swapsize
+    echo "swapsize=$swapsize" >> ~/archscript/config.conf
+fi
 
 # Create swapfile, set permissions, & load swap
 dd if=/dev/zero of=/mnt/swapfile bs=1M count=$swapsize

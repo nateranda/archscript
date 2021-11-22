@@ -1,19 +1,25 @@
 #!/bin/bash
 
-# If you're running these scripts manually, this should be run in chroot, AKA after arch-chroot.
-
 echo "##############"
 echo "#POST INSTALL#"
 echo "##############"
 
-# Import config.conf file if it exists
-if [ -e /config.conf ]; then source /config.conf; fi
+# Import config.conf file
+source /config.conf
+
+#Enable multilib
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+pacman -Sy --noconfirm
 
 # Enable parallel downloads on machine
 sed -i 's/^#Para/Para/' /etc/pacman.conf
 
 # Prompt for timezone if not in conf file
-if [ ! -v timezone ]; then read -p "Timezone (after /usr/share/zoneinfo/, ex. America/New_York): " timezone; fi
+if [ ! -v timezone ];
+then
+    read -p "Timezone (after /usr/share/zoneinfo/, ex. America/New_York): " Timezone
+    echo "timezone=$timezone" >> /config.conf
+fi
 
 # Set timezone
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
@@ -22,7 +28,11 @@ ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
 
 # Prompt for locale if not in conf file
-if [ ! -v locale ]; then read -p "Locale: " locale; fi
+if [ ! -v locale ]
+then
+    read -p "Locale: " locale
+    echo "locale=$locale" >> /config.conf
+fi
 
 # Uncomment locale in locale.gen & generate locale
 sed -i "/$locale/s/^#//" /etc/locale.gen
@@ -32,13 +42,21 @@ locale-gen
 echo "LANG=$locale" >> /etc/locale.conf
 
 # Prompt for hostname if not in conf file
-if [ ! -v hostname ]; then read -p "Hostname: " hostname; fi
+if [ ! -v hostname ]
+then
+    read -p "Hostname: " hostname
+    echo "hostname=$hostname" >> /config.conf
+fi
 
 # Add hostname
 echo $hostname >> /etc/hostname
 
 # Prompt for bootloader if not in conf file
-if [ ! -v bootloader ]; then read -p "Bootloader [grub]: " bootloader; fi
+if [ ! -v bootloader ]
+then
+    read -p "Bootloader [grub]: " bootloader
+    echo "bootloader=$bootloader" >> /config.conf
+fi
 
 # Install bootloader
 case $bootloader in
@@ -56,7 +74,8 @@ case $bootloader in
         fi
         ;;
     *)
-        echo "invalid or unsupported bootloader"
+        echo "invalid or unsupported bootloader. Aborting:"
+        exit
         ;;
 esac
 
@@ -64,7 +83,11 @@ esac
 passwd
 
 # Prompt for username if not in conf file
-if [ ! -v username ]; then read -p "Username: " username; fi
+if [ ! -v username ]
+then
+    read -p "Username: " username
+    echo "username=$username" >> /config.conf
+fi
 
 # Set up user
 pacman -S sudo --noconfirm
@@ -81,7 +104,11 @@ systemctl enable dhcpcd
 systemctl enable NetworkManager
 
 # Prompt for desktop if not in conf file
-if [ ! -v desktop ]; then read -p "Desktop Environment/Window Manager [none/gnome/gnome-additions]: " desktop; fi
+if [ ! -v desktop ]
+then
+    read -p "Desktop Environment/Window Manager [none/gnome/gnome-additions]: " desktop
+    echo "desktop:$desktop" >> /config.conf
+fi
 
 # Download desktop environment or window manager
 case $desktop in
@@ -96,7 +123,7 @@ case $desktop in
         ;;
     gnome-additions)
         # Install/enable gnome & bluez
-        pacman -S xorg gnome gnome-tweaks bluez bluez-utils --noconfirm --needed
+        pacman -S xorg gnome gnome-tweaks gnome-software-packagekit-plugin bluez bluez-utils --noconfirm --needed
         systemctl enable bluetooth
         systemctl enable gdm
 
@@ -111,6 +138,7 @@ case $desktop in
         ;;
     *)
         echo "Invalid DE/WM choice. Skipping install."
+        sleep 5
         ;;
 esac
 
