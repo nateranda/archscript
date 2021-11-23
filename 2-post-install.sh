@@ -133,7 +133,7 @@ case $desktop in
         ;;
     gnome)
         # Install/enable gnome & bluez
-        pacman -S xorg gnome bluez bluez-utils --noconfirm --needed
+        pacman -S xorg gnome bluez --noconfirm --needed
         systemctl enable bluetooth
         systemctl enable gdm
         ;;

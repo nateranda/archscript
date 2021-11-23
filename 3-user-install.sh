@@ -19,8 +19,8 @@ cd ~
 case $aurhelper in
     paru)
         sudo pacman -S base-devel git --noconfirm --needed
-        git clone https://aur.archlinux.org/paru.git
-        cd paru
+        git clone https://aur.archlinux.org/paru-bin.git
+        cd paru-bin
         makepkg -si --noconfirm
         cd ~
         ;;
