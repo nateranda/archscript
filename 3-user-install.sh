@@ -44,23 +44,3 @@ if [[ $(type -t ${desktop}_user_additions) == function ]]
 then
     ${desktop}_user_additions
 fi
-
-# Continue with DE/WM setup
-case $desktop in
-    gnome-additions)
-        # Install AUR packages
-        $aurhelper -S chrome-gnome-shell nordic-darker-theme gnome-terminal-transparency --noconfirm
-
-        # Install nord gnome terminal theme
-        git clone https://github.com/arcticicestudio/nord-gnome-terminal.git ~/Downloads
-        . ~/Downloads/nord-gnome-terminal/src/nord.sh
-        rm -rf ~/Downloads/nord-gnome-terminal
-
-        # Install extensions
-        pip install --user gnome-extensions-cli
-        echo -n "export PATH=/home/$username/.local/bin:$PATH" >> ~/.bashrc
-        gnome-extensions-cli install 751 3193 1160 1112 615 --backend file
-        ;;
-    *)
-        echo "Skipping."
-esac
