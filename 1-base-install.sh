@@ -18,7 +18,7 @@ if [ ! -v disk ]
 then
     lsblk
     read -p "What disk do you want to install Arch on?: " disk
-    echo -e "\ndisk:$disk" >> ~/archscript/config.conf
+    echo -e "\ndisk=$disk" >> ~/archscript/config.conf
 fi
 
 # Prompt for confirmation to erase all data on drive
