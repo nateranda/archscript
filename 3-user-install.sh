@@ -21,14 +21,14 @@ case $aurhelper in
         sudo pacman -S base-devel git --noconfirm --needed
         git clone https://aur.archlinux.org/paru.git
         cd paru
-        makepkg -si
+        makepkg -si --noconfirm
         cd ~
         ;;
     yay)
         sudo pacman -S base-devel git --noconfirm --needed
         git clone https://aur.archlinux.org/yay.git
         cd yay
-        makepkg -si
+        makepkg -si --noconfirm
         cd ~
         ;;
     *)
@@ -38,6 +38,12 @@ esac
 
 # Install misc AUR packages
 $aurhelper -S $aurpackages --noconfirm
+
+# Install additions if specified
+if [[ $(type -t ${desktop}_user_additions) == function ]]
+then
+    ${desktop}_user_additions
+fi
 
 # Continue with DE/WM setup
 case $desktop in

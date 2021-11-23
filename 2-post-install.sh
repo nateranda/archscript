@@ -137,26 +137,17 @@ case $desktop in
         systemctl enable bluetooth
         systemctl enable gdm
         ;;
-    gnome-additions)
-        # Install/enable gnome & misc packages
-        pacman -S xorg gnome gnome-tweaks gnome-software-packagekit-plugin bluez bluez-utils python-pip --noconfirm --needed
-        systemctl enable bluetooth
-        systemctl enable gdm
-
-        # Remove GNOME bloat
-        pacman -R gnome-books gnome-contacts gnome-maps gnome-music gnome-weather simple-scan --noconfirm
-
-        # Tweak settings to my liking
-        dconf write /org/gnome/desktop/peripherals/mouse/accel-profile "'flat'"
-        dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,maximize,close'"
-        dconf write /org/gnome/desktop/interface/clock-format "'12h'"
-        dconf write /org/gtk/settings/file-chooser/clock-format "'12h'"
-        ;;
     *)
         echo "Invalid DE/WM choice. Skipping install."
         sleep 5
         ;;
 esac
+
+# Install additions if specified
+if [[ $(type -t ${desktop}_root_additions) == function ]]
+then
+    ${desktop}_root_additions
+fi
 
 # Install other packages:
 pacman -S $packages --noconfirm
