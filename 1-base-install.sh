@@ -13,11 +13,14 @@ timedatectl set-ntp true
 # Load keymap if in conf file
 if [ -v keymap ]; then loadkeys $keymap; fi
 
+# List disks
+lsblk
+
 # Prompt for disk if not in conf file
 if [ ! -v disk ]
 then
-    lsblk
-    read -p "What disk do you want to install Arch on?: " disk
+    read -p "What disk do you want to install Arch on?: " disk-short
+    disk=/dev/$disk-short
     echo -e "\ndisk=$disk" >> ~/archscript/config.conf
 fi
 
