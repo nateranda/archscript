@@ -39,7 +39,6 @@ then
 fi
 
 # Uncomment locale in locale.gen & generate locale
-echo "Generating locale..."
 sed -i "/$locale/s/^#//" /etc/locale.gen
 locale-gen
 echo "LANG=$locale" >> /etc/locale.conf
