@@ -40,7 +40,5 @@ esac
 $aurhelper -S $aurpackages --noconfirm
 
 # Install additions if specified
-if [[ $(type -t ${desktop}_user_additions) == function ]]
-then
-    ${desktop}_user_additions
-fi
+if [[ $(type -t ${desktop}_user_additions) == function ]]; then ${desktop}_user_additions; fi
+if [[ $(type -t user_additions) == function ]]; then $user_additions; fi

@@ -4,9 +4,9 @@ A set of shell scripts that aim to provide a fast, customizable, and easy way to
 
 ## Overview
 
-Although there are many automated Arch install scripts, they are mostly tailored to a single user's preferences on certain hardware. I wanted to make a script that served as a baseline for other users to expand upon and customize to their liking, no matter their computer or workflow.
+Although there are many automated Arch install scripts, they are either time-consuming or only tailored to a single user's preferences and hardware. I wanted to make a script that served as a baseline for other users to expand upon and customize to their liking, no matter their computer or workflow.
 
-To make this script as easy to configure as possible, the most common customizations like packages, desktop evironments, and bootloaders are done in a .conf file away from the rest of the heavy scripting. If you need to go into the scripts themselves to tweak something, I've tried to annotate the scripts as much as possible to help them make sense.
+To make this script as easy to configure as possible, all customizations are done in a .conf file. However, if you need to go into the scripts themselves to tweak something, I've tried to annotate the scripts as much as possible to help them make sense.
 
 ## Usage
 
@@ -35,6 +35,8 @@ chmod +x install.sh
 
 Almost every option in this script can be specified beforehand using a config file. Just create a config file called `config.conf` and put it in the same folder as the scripts. It will be detected and used automatically. If you choose not to use a config file, you will find an automatically-generated one in your user's home directory after you are finished installing.
 
+DO NOT put actual commands anywhere other than the additions functions — they will be run multiple times in different places otherwise.
+
 NOTE: Because it feels weird to store passwords on the system in plaintext and I can't be bothered to encrypt them myself, passwords can't be specified using the conf file. Thankfully, they're asked only a couple minutes into the install process.
 
 ### Base Configs
@@ -55,9 +57,9 @@ NOTE: Because it feels weird to store passwords on the system in plaintext and I
 
 `keymap` - your keymap. Defaults to US if left blank because there's not really a good way to display all useful keymaps at once.
 
-`bootloader [grub]` - the bootloader you want to use. Make sure the bootloader you choose matches your boot method, AKA don't use rEFInd on BIOS machines.
+`bootloader [grub]` - the bootloader you want to use. Make sure it matches your boot method, e.g. don't use rEFInd on BIOS machines.
 
-`desktop [none, gnome]` - your desired Desktop Environment/Window Manager.
+`desktop [none, gnome]` - your desired desktop environment or window manager.
 
 `aurhelper [paru, yay]` - your desired Arch User Repository helper.
 
@@ -70,23 +72,30 @@ packages='firefox discord vlc'
 aurpackages='spotify timeshift ulauncher'
 ```
 
-### Desktop Additions
+### Additions
 
-These functions are run after the Desktop Environment or Window Manager is installed. Honestly, you could put anything into here, but they are meant to let you further configure your DE/WM automatically. Anything meant to be run as root goes in `[DE/WM]_root_additions` and anything meant to be run as the main user goes in `[DE/WM]_user_additions`:
+These functions are run after the Desktop Environment or Window Manager is installed. They provide a way to further configure your system/desktop without having to change the scripts themselves. Commands run by root go in `root_additions` and commands run by the main user go in `user_additions`. For DE/WM-specific commands, add the name of the (supported) DE/WM before the function.
 
 ```shell
+# Will only run if GNOME is selected
 gnome_root_additions(){
     commands go here
 }
 
+# Same here, but as the main user
 gnome_user_additions(){
+    commands go here
+}
+
+# Will run every install
+user_additions(){
     commands go here
 }
 ```
 
 ### Tips and Tricks
 
-If you're testing your own config file, I've found it much easier to automate the whole process with a simple shell script with execution privileges that looks something like this:
+If you're testing your own config file, I've found it much easier to automate the whole process with a simple shell script with execution privileges. Mine looks something like this:
 
 ```shell
 git clone https://github.com/nateranda/archscript

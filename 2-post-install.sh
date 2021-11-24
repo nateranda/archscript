@@ -144,10 +144,8 @@ case $desktop in
 esac
 
 # Install additions if specified
-if [[ $(type -t ${desktop}_root_additions) == function ]]
-then
-    ${desktop}_root_additions
-fi
+if [[ $(type -t ${desktop}_root_additions) == function ]]; then ${desktop}_root_additions; fi
+if [[ $(type -t root_additions) == function ]]; then $root_additions; fi
 
 # Install other packages:
 pacman -S $packages --noconfirm

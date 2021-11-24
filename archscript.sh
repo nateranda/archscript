@@ -7,8 +7,7 @@
 # A set of shell scripts that aim to provide a fast, customizable, and easy way
 # to install Arch Linux. 
 
-# In order for this script to be completely autonomous, it needs to be split up
-# into parts:
+# The bulk of the script is split up into three parts:
 
 # 1-base-install.sh (everything done before arch-chroot)
 # 2-post-install.sh (everything performed in arch-chroot)
@@ -25,10 +24,15 @@
 # Import configure.conf file if it exists
 if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
 
-# Give execution privileges
-chmod +x 1-base-install.sh
+# Prompt for username if not in conf file
+if [ ! -v username ]
+then
+    read -p "Username: " username
+    echo -e "\nusername=$username" >> ~/archscript/config.conf
+fi
 
-# Run base-install
+# Give execution privileges & run base-install
+chmod +x 1-base-install.sh
 ./1-base-install.sh
 
 # Copy file/config to /mnt
