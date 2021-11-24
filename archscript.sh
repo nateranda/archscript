@@ -33,7 +33,7 @@ fi
 
 # Give execution privileges & run base-install
 chmod +x 1-base-install.sh
-./1-base-install.sh >> log.txt
+./1-base-install.sh
 
 # Copy file/config to /mnt
 cp 2-post-install.sh /mnt/2-post-install.sh
@@ -41,7 +41,7 @@ cp ~/archscript/config.conf /mnt/config.conf
 
 # Give execution privileges & run post-install in chroot
 chmod +x /mnt/2-post-install.sh
-arch-chroot /mnt /2-post-install.sh >> log.txt
+arch-chroot /mnt /2-post-install.sh
 
 # Remove script from /mnt
 rm /mnt/2-post-install.sh
@@ -54,4 +54,4 @@ rm /mnt/config.conf
 # Give execution privileges & run user-install as user
 chmod +x /mnt/home/$username/3-user-install.sh
 arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/3-user-install.sh
-rm /mnt/home/$username/3-user-install.sh >> log.txt
+rm /mnt/home/$username/3-user-install.sh
