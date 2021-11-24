@@ -37,7 +37,7 @@ case $aurhelper in
 esac
 
 # Install misc AUR packages
-$aurhelper -S $aurpackages --noconfirm
+if [ ! -v aurpackages ]; then $aurhelper -S $aurpackages --noconfirm; fi
 
 # Install additions if specified
 if [[ $(type -t ${desktop}_user_additions) == function ]]; then ${desktop}_user_additions; fi

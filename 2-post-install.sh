@@ -148,4 +148,4 @@ if [[ $(type -t ${desktop}_root_additions) == function ]]; then ${desktop}_root_
 if [[ $(type -t root_additions) == function ]]; then $root_additions; fi
 
 # Install other packages:
-pacman -S $packages --noconfirm
+if [ ! -v packages ]; then pacman -S $packages --noconfirm; fi
