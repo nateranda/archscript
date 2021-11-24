@@ -18,6 +18,7 @@ fi
 cd ~
 case $aurhelper in
     paru)
+        echo "Installing paru..."
         sudo pacman -S base-devel git --noconfirm --needed
         git clone https://aur.archlinux.org/paru-bin.git
         cd paru-bin
@@ -25,6 +26,7 @@ case $aurhelper in
         cd ~
         ;;
     yay)
+        echo "Installing yay..."
         sudo pacman -S base-devel git --noconfirm --needed
         git clone https://aur.archlinux.org/yay.git
         cd yay
@@ -37,8 +39,10 @@ case $aurhelper in
 esac
 
 # Install misc AUR packages
+echo "Installing misc AUR packages..."
 if [ ! -v aurpackages ]; then $aurhelper -S $aurpackages --noconfirm; fi
 
 # Install additions if specified
+echo "Installing user additions"
 if [[ $(type -t ${desktop}_user_additions) == function ]]; then ${desktop}_user_additions; fi
 if [[ $(type -t user_additions) == function ]]; then $user_additions; fi
