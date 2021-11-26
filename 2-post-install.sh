@@ -131,7 +131,7 @@ systemctl enable NetworkManager
 if [ ! -v desktop ]
 then
     read -p "Desktop Environment/Window Manager [none/gnome/gnome-additions]: " desktop
-    echo -e "\ndesktop:$desktop" >> /config.conf
+    echo -e "\ndesktop=$desktop" >> /config.conf
 fi
 
 # Download desktop environment or window manager
@@ -162,18 +162,18 @@ echo "Installing misc packages..."
 if [ ! -v packages ]; then pacman -S $packages --noconfirm; fi
 
 # Prompt to restart before running user-install
-sleep 10
-read -p "The post-install is done! The vanilla user-install script runs fine without restarting, but some commands really don't like chroot. Restart? [Y/n] " restart
-case $restart in
-    y|Y|yes|YES|'')
-        echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install. Restarting in 10 seconds:"
-        sleep 10
-        exit
-        reboot
-        ;;
-    *)
-        echo "Running 3-user-install.sh:"
-        ;;
-esac
-sleep 10
-        
+if [ ! -v restart ]
+then
+    read -p "The post-install is done! You could continue without restarting, but some commands really don't like chroot. Restart? [Y/n] " restart
+    case $restart in
+        y|Y|yes|YES|'')
+            echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install. Restarting in 10 seconds:"
+            sleep 10
+            echo -e "\nrestart=true" >> ~/config.conf
+            ;;
+        *)
+            echo "Running 3-user-install.sh:"
+            echo -e "\nrestart=false" >> ~/config.conf
+            ;;
+    esac
+fi

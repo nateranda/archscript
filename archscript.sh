@@ -51,6 +51,15 @@ cp 3-user-install.sh /mnt/home/$username/3-user-install.sh
 cp /mnt/config.conf /mnt/home/$username/config.conf
 rm /mnt/config.conf
 
+# Import configure.conf file again because it might have changed
+source /mnt/home/$username/config.conf
+
+# Restart if specified
+if [ $restart == "false" ]
+then
+    reboot
+fi
+
 # Give execution privileges & run user-install as user
 chmod +x /mnt/home/$username/3-user-install.sh
 arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/3-user-install.sh
