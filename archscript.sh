@@ -55,8 +55,9 @@ rm /mnt/config.conf
 source /mnt/home/$username/config.conf
 
 # Restart if specified
-if [ $restart == "false" ]
+if [ $restart == "true" ]
 then
+    chmod +x /mnt/home/$username/3-user-install.sh
     reboot
 fi
 

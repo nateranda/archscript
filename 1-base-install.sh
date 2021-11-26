@@ -30,11 +30,11 @@ then
 fi
 
 # Prompt for confirmation to erase all data on drive
-read -p "This will erase all data on $disk. Continue? [y/n]: " consent
+read -p "This will erase all data on $disk. Type 'yes' to confirm: " consent
 
 # Continue if yes
 case $consent in
-    y|Y|yes|YES)
+    yes)
         echo "Formatting $disk:"
         ;;    
     *)
