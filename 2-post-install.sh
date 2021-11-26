@@ -170,4 +170,5 @@ case $restart in
         reboot
     *)
         echo "Running 3-user-install.sh:"
+esac
         

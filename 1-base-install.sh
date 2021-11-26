@@ -24,7 +24,7 @@ lsblk
 # Prompt for disk if not in conf file
 if [ ! -v disk ]
 then
-    read -p "What disk do you want to install Arch on?: " diskshort
+    read -p "What disk do you want to install Arch on? (omit /dev/): " diskshort
     disk=/dev/$diskshort
     echo -e "\ndisk=$disk" >> ~/archscript/config.conf
 fi
