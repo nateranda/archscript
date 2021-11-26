@@ -61,6 +61,7 @@ case $restart in
         chmod +x /mnt/home/$username/3-user-install.sh
         reboot
         echo "uh what"
+        sleep 10
 esac
 
 # Give execution privileges & run user-install as user
