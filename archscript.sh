@@ -57,8 +57,10 @@ source /mnt/home/$username/config.conf
 # Restart if specified
 case $restart in
     true)
+        echo "we fucking got to this point what it going on"
         chmod +x /mnt/home/$username/3-user-install.sh
         reboot
+        echo "uh what"
 esac
 
 # Give execution privileges & run user-install as user
