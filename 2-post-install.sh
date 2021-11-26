@@ -120,12 +120,11 @@ passwd $username
 usermod -aG wheel $username
 
 # Add wheel to sudoers
-sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL)/%wheel ALL=(ALL)/' /etc/sudoers
 
-# Install & enable essential internet tools
-echo "Installing internet tools..."
-pacman -S networkmanager dhcpcd --noconfirm
-systemctl enable dhcpcd
+# Install & enable networkmanager
+echo "Installing internet..."
+pacman -S networkmanager --noconfirm
 systemctl enable NetworkManager
 
 # Prompt for desktop if not in conf file
@@ -161,3 +160,14 @@ if [[ $(type -t root_additions) == function ]]; then $root_additions; fi
 # Install other packages:
 echo "Installing misc packages..."
 if [ ! -v packages ]; then pacman -S $packages --noconfirm; fi
+
+# Prompt to restart before running user-install
+read -p echo "The post-install is done! The vanilla user-install script runs fine without restarting, but some commands really don't like chroot. Restart? [Y/n]" restart
+case $restart in
+    y|Y|yes|YES|'')
+        echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install. Restarting in 10 seconds:"
+        sleep 10
+        reboot
+    *)
+        echo "Running 3-user-install.sh:"
+        
