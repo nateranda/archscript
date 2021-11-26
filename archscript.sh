@@ -60,6 +60,7 @@ then
     chmod +x /mnt/home/$username/3-user-install.sh
     reboot
 fi
+sleep 10
 
 # Give execution privileges & run user-install as user
 chmod +x /mnt/home/$username/3-user-install.sh
