@@ -168,7 +168,9 @@ case $restart in
         echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install. Restarting in 10 seconds:"
         sleep 10
         reboot
+        ;;
     *)
         echo "Running 3-user-install.sh:"
+        ;;
 esac
         
