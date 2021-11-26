@@ -53,7 +53,7 @@ rm /mnt/config.conf
 chmod +x /mnt/home/$username/3-user-install.sh
 
 # Import config.conf file again because it might have changed
-source /mnt/config.conf
+source /mnt/home/$username/config.conf
 
 # Restart if specified
 case $restart in
