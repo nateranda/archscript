@@ -21,7 +21,7 @@
 # -----------------------------------------------------------------------------
 
 
-# Import configure.conf file if it exists
+# Import config.conf file if it exists
 if [ -e ~/archscript/config.conf ]; then source ~/archscript/config.conf; fi
 
 # Prompt for username if not in conf file
@@ -51,16 +51,15 @@ cp 3-user-install.sh /mnt/home/$username/3-user-install.sh
 cp /mnt/config.conf /mnt/home/$username/config.conf
 rm /mnt/config.conf
 
-# Import configure.conf file again because it might have changed
+# Import config.conf file again because it might have changed
 source /mnt/home/$username/config.conf
 
 # Restart if specified
-if [ "$restart" == "true" ]
-then
-    chmod +x /mnt/home/$username/3-user-install.sh
-    reboot
-fi
-sleep 10
+case $restart in
+    true)
+        chmod +x /mnt/home/$username/3-user-install.sh
+        reboot
+esac
 
 # Give execution privileges & run user-install as user
 chmod +x /mnt/home/$username/3-user-install.sh

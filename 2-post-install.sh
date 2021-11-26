@@ -167,7 +167,8 @@ then
     read -p "The post-install is done! You could continue without restarting, but some commands really don't like chroot. Restart? [Y/n] " restart
     case $restart in
         y|Y|yes|YES|'')
-            echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install. Restarting in 10 seconds:"
+            echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install."
+            echo "Restarting in 10 seconds:"
             sleep 10
             echo -e "\nrestart=true" >> ~/config.conf
             ;;
