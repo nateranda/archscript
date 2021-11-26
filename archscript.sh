@@ -50,21 +50,18 @@ rm /mnt/2-post-install.sh
 cp 3-user-install.sh /mnt/home/$username/3-user-install.sh
 cp /mnt/config.conf /mnt/home/$username/config.conf
 rm /mnt/config.conf
+chmod +x /mnt/home/$username/3-user-install.sh
 
 # Import config.conf file again because it might have changed
-source /mnt/home/$username/config.conf
+source /mnt/config.conf
 
 # Restart if specified
 case $restart in
     true)
-        echo "we fucking got to this point what it going on"
-        chmod +x /mnt/home/$username/3-user-install.sh
         reboot
-        echo "uh what"
-        sleep 10
+        ;;
 esac
 
-# Give execution privileges & run user-install as user
-chmod +x /mnt/home/$username/3-user-install.sh
+# run user-install as user
 arch-chroot /mnt /usr/bin/runuser -u $username -- /home/$username/3-user-install.sh
 rm /mnt/home/$username/3-user-install.sh

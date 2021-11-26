@@ -170,11 +170,11 @@ then
             echo "The system will now restart. Make sure to run '3-user-install.sh' located in your home directory to finish the install."
             echo "Restarting in 10 seconds:"
             sleep 10
-            echo -e "\nrestart=true" >> ~/config.conf
+            echo -e "\nrestart=true" >> /config.conf
             ;;
         *)
             echo "Running 3-user-install.sh:"
-            echo -e "\nrestart=false" >> ~/config.conf
+            echo -e "\nrestart=false" >> /config.conf
             ;;
     esac
 fi
