@@ -47,7 +47,7 @@ NOTE: Because it feels weird to store passwords on the system in plaintext and I
 
 `swapsize` - swapfile size in megabytes. Modern computers don't need more than a few gigabytes, if any at all.
 
-`timezone` - the timezone you're located in. Put down whatever comes after /usr/share/zoneinfo/ — for me, it's America/New_York.
+`timezone` - the timezone you're located in. Put down whatever comes after /usr/share/zoneinfo/ — for me, it's America/New\_York.
 
 `hostname` - the hostname of the machine.
 
