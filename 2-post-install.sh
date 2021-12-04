@@ -146,17 +146,16 @@ case $desktop in
         systemctl enable bluetooth
         systemctl enable gdm
         ;;
-    *)
-        echo "Invalid DE/WM choice. Skipping install."
-        sleep 5
-        ;;
     budgie)
         echo "Installing Budgie..."
         # Install/enable budgie, sddm, & bluez
         pacman -S xorg budgie-desktop bluez bluez-utils sddm --noconfirm --needed
         systemctl enable sddm
         systemctl enable bluetooth
-
+    *)
+        echo "Invalid DE/WM choice. Skipping install."
+        sleep 5
+        ;;
 esac
 
 # Install additions if specified
