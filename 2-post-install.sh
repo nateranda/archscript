@@ -149,7 +149,7 @@ case $desktop in
     budgie)
         echo "Installing Budgie..."
         # Install/enable budgie, sddm, & bluez
-        pacman -S xorg budgie-desktop bluez bluez-utils sddm --noconfirm --needed
+        pacman -S xorg budgie-desktop bluez sddm --noconfirm --needed
         systemctl enable sddm
         systemctl enable bluetooth
     *)
