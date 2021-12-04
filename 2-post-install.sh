@@ -130,7 +130,7 @@ systemctl enable NetworkManager
 # Prompt for desktop if not in conf file
 if [ ! -v desktop ]
 then
-    read -p "Desktop Environment/Window Manager [none/gnome/gnome-additions]: " desktop
+    read -p "Desktop Environment/Window Manager [none/gnome/budgie]: " desktop
     echo -e "\ndesktop=$desktop" >> /config.conf
 fi
 
@@ -150,6 +150,13 @@ case $desktop in
         echo "Invalid DE/WM choice. Skipping install."
         sleep 5
         ;;
+    budgie)
+        echo "Installing Budgie..."
+        # Install/enable budgie, sddm, & bluez
+        pacman -S xorg budgie-desktop bluez bluez-utils sddm --noconfirm --needed
+        systemctl enable sddm
+        systemctl enable bluetooth
+
 esac
 
 # Install additions if specified
