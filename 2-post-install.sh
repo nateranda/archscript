@@ -141,8 +141,9 @@ case $desktop in
         ;;
     gnome)
         echo "Installing GNOME..."
-        # Install/enable gnome & bluez
-        pacman -S xorg gnome bluez --noconfirm --needed
+        # Install/enable gnome, bluetooth, & printing
+        pacman -S xorg gnome bluez cups system-config-printer --noconfirm --needed
+        systemctl enable cups
         systemctl enable bluetooth
         systemctl enable gdm
         ;;
